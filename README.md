@@ -8,10 +8,24 @@ To follow along with the workshop you have two options:
 * Install R from https://cran.r-project.org/
 * RStudio desktop from https://www.rstudio.com
 
-Install the following R packages from CRAN in the usual way: "tidyverse", "caret", "keras"
+Install the following R packages from CRAN in the usual way: 
+
+```r
+install.packages(c("tidyverse", "caret", "keras"))
+```
 
 In an R session install the keras/tensorflow python libraries by running:
+```r
 library(keras)
 install_keras()
+```
 
 This can take a while as it will install anaconda python at the same time. For further instructions please see https://keras.rstudio.com/ and follow the instructions there.
+
+If it worked you should get:
+
+```r
+library(keras)
+is_keras_available()
+[1] TRUE
+```
