@@ -31,14 +31,14 @@ head(scaledIris$train)
 map(scaledIris, replace_na, replace = 0)
 
 ## Create x and y matrix
-xMatrix <- map(scaledIris, as.matrix)
-yMatrix <- map(irisDummy, as.matrix)
+xIris <- map(scaledIris, as.matrix)
+yIris <- map(irisDummy, as.matrix)
 
 
 # If you're lost just do
 
-xMatrix <- readRDS("/data/xIris.rds")
-yMatrix <- readRDS("/data/yIris.rds")
+xIris <- readRDS("/data/xIris.rds")
+yIris <- readRDS("/data/yIris.rds")
 
 ############# Building models
 
@@ -61,7 +61,7 @@ model %>% compile(
 
 ## Train the model
 
-history <- model %>% fit(xMatrix$train, 
+history <- model %>% fit(xIris$train, 
                      yIris$train, 
                      epochs = 100, 
                      validation_data = list(xIris$test, yIris$test))
