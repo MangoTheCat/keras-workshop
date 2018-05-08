@@ -1,44 +1,44 @@
 library(keras)
-library(caret)
+library(rsample)
+library(recipes)
 library(tidyverse)
 
-## Sample IDs for training set
-trainID <- createDataPartition(iris$Species, p = 0.8) 
+## Create training and test sets
 
-trainingData <- iris %>%
-  slice(trainID$Resample1)
+set.seed(367)
+data_split <- initial_split(iris, strata = "Species", prop = 0.8)
 
-testData <- iris %>%
-  slice(-trainID$Resample1)
+fullData <- list(train = analysis(data_split), 
+                 test = assessment(data_split))
 
-fullData <- list(train = trainingData, 
-                 test = testData)
-
-## Create dummy variables
-dummy <- dummyVars(~ Species, data = iris)
-
-irisDummy <- map(fullData, predict, object = dummy)
-
-head(irisDummy$train)
-
-## Scale the data (split training and test)
-numericIris <- map(fullData, select_if, is.numeric)
-
-scaledIris <- map(numericIris, scale)
-
-head(scaledIris$train)
-
-map(scaledIris, replace_na, replace = 0)
+## Create dummy variables ** would require devel version of recipes for now **
+dummy_recipes <- recipe(Species ~ ., data = fullData$train) %>%
+  step_dummy(Species, one_hot = TRUE, role = "outcome") %>%
+  step_scale(all_predictors()) %>%
+  # (I would center too)
+  # (optionally add steps for imputation (step_knnimpute, etc))
+  # now estimate the scalings from the training set to be used to 
+  # scale with the `bake` function
+  prep(training = iris)
 
 ## Create x and y matrix
-xIris <- map(scaledIris, as.matrix)
-yIris <- map(irisDummy, as.matrix)
+xIris <- list(
+  train = bake(dummy_recipes, newdata = fullData$train, 
+              all_predictors(), 
+              composition = "matrix"),
+  test = bake(dummy_recipes, newdata = fullData$test, 
+               all_predictors(), 
+               composition = "matrix")
+)
+yIris <- list(
+  train = bake(dummy_recipes, newdata = fullData$train, 
+               all_outcomes(),
+               composition = "matrix"),
+  test = bake(dummy_recipes, newdata = fullData$test, 
+               all_outcomes(),
+               composition = "matrix")
+  )
 
-
-# If you're lost just do
-
-xIris <- readRDS("/data/xIris.rds")
-yIris <- readRDS("/data/yIris.rds")
 
 ############# Building models
 
@@ -76,14 +76,12 @@ plot(history)
 model %>% 
   evaluate(xIris$test, yIris$test)
 
-
 model %>% 
-  predict(xIris$test)
+  predict(xIris$test) %>%
+  head()
 
 model %>%
   predict_classes(xIris$test) 
-
-
 
 ############# Controlling Layers
 
