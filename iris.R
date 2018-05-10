@@ -1,34 +1,65 @@
 library(keras)
 library(rsample)
-library(recipes)
+library(recipes) ## ** requires devel version of recipes for now **
 library(tidyverse)
 
 ## Create training and test sets
 
 set.seed(367)
+
 data_split <- initial_split(iris, strata = "Species", prop = 0.8)
 
 fullData <- list(train = analysis(data_split), 
                  test = assessment(data_split))
 
-## Create dummy variables ** would require devel version of recipes for now **
-dummy_recipes <- recipe(Species ~ ., data = fullData$train) %>%
+
+# Recipes
+
+empty_recipe <- recipe(Species ~ ., data = fullData$train)
+empty_recipe
+
+# One hot encode
+
+dummy_recipe <- empty_recipe %>%
+  step_dummy(Species, one_hot = TRUE, role = "outcome")
+
+  
+dummy_recipe %>%
+  prep(fullData$train) %>%
+  bake(fullData$train, all_outcomes()) %>%
+  head()
+
+# Center and scale  
+
+scale_recipe <- empty_recipe %>%
+  step_center(all_predictors()) %>%
+  step_scale(all_predictors()) 
+
+scale_recipe %>%
+  prep(fullData$train) %>%
+  bake(fullData$train,
+       all_predictors()) %>%
+  head()
+
+
+# Put it all together and prep
+
+iris_recipe <- recipe(Species ~ ., data = fullData$train) %>%
   step_dummy(Species, one_hot = TRUE, role = "outcome") %>%
   step_center(all_predictors()) %>%
   step_scale(all_predictors()) %>%
-  # (optionally add steps for imputation (step_knnimpute, etc))
-  # now estimate the scalings from the training set to be used to 
-  # scale with the `bake` function
   prep(training = fullData$train)
+
+tidy(iris_recipe)
 
 ## Create x and y matrix
 
-xIris <- map(fullData, ~ bake(object = dummy_recipes,
+xIris <- map(fullData, ~ bake(object = iris_recipe,
                               newdata = .x,
                               all_predictors(),
                               composition = "matrix"))
 
-yIris <- map(fullData, ~ bake(object = dummy_recipes,
+yIris <- map(fullData, ~ bake(object = iris_recipe,
                               newdata = .x,
                               all_outcomes(),
                               composition = "matrix"))
