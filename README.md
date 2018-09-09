@@ -11,7 +11,7 @@ To follow along with the workshop you have two options:
 Install the following R packages from CRAN in the usual way: 
 
 ```r
-install.packages(c("tidyverse", "rsample", "keras"))
+install.packages(c("tidyverse", "rsample", "keras", "devtools"))
 ```
 
 You'll also need the devel version of `recipes`:
