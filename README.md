@@ -7,6 +7,7 @@ To follow along with the workshop you have two options:
 
 * Install R from https://cran.r-project.org/
 * RStudio desktop from https://www.rstudio.com
+* Install Anaconda from https://www.anaconda.com/download/
 
 Install the following R packages from CRAN in the usual way: 
 
@@ -28,7 +29,7 @@ library(keras)
 install_keras()
 ```
 
-This can take a while as it will install anaconda python at the same time. For further instructions please see https://keras.rstudio.com/ and follow the instructions there.
+This takes a while as it will install the various python packages that are required. For further instructions please see https://keras.rstudio.com/ and follow the instructions there.
 
 If it worked you should get:
 
