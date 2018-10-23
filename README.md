@@ -12,14 +12,7 @@ To follow along with the workshop you have two options:
 Install the following R packages from CRAN in the usual way: 
 
 ```r
-install.packages(c("tidyverse", "rsample", "keras"))
-```
-
-You'll also need the devel version of `recipes`:
-
-```r
-require("devtools")
-install_github("topepo/recipes")
+install.packages(c("tidyverse", "rsample", "recipes", "keras"))
 ```
 
 In an R session install the keras/tensorflow python libraries by running:
