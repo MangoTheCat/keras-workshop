@@ -1,9 +1,6 @@
 # Keras for R Workshop
 
-To follow along with the workshop you have two options:
-
-1. We will provide a cloud-base RStudio environment with everything pre-installed and datasets in place. We'll give you a URL and a login on the day and you'll only need a laptop with a web browser and ability to get on wifi.
-2. All of the models we're building will work on a laptop so if you want to follow along on your own machine then please follow the steps below:
+All of the models we're building will work on a laptop so if you want to follow along on your own machine then please follow the steps below:
 
 * Install R from https://cran.r-project.org/
 * RStudio desktop from https://www.rstudio.com
