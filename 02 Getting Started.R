@@ -64,12 +64,12 @@ tidy(iris_recipe)
 ## Create x and y matrix
 
 xIris <- map(fullData, ~ bake(object = iris_recipe,
-                              newdata = .x,
+                              new_data = .x,
                               all_predictors(),
                               composition = "matrix"))
 
 yIris <- map(fullData, ~ bake(object = iris_recipe,
-                              newdata = .x,
+                              new_data = .x,
                               all_outcomes(),
                               composition = "matrix"))
 
@@ -107,11 +107,11 @@ bc_recipe <- recipe(Class ~ ., data = bcFull$train) %>%
   prep(bcFull$train)
 
 bcX <- map(bcFull, ~ bake(object = bc_recipe, 
-                          newdata = .x,
+                          new_data = .x,
                           all_predictors()))
 
 bcY <- map(bcFull, ~ bake(object = bc_recipe, 
-                          newdata = .x,
+                          new_data = .x,
                           all_outcomes()))
 
 # 6.	Replace all missing values with 0

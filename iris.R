@@ -55,12 +55,12 @@ tidy(iris_recipe)
 ## Create x and y matrix
 
 xIris <- map(fullData, ~ bake(object = iris_recipe,
-                              newdata = .x,
+                              new_data = .x,
                               all_predictors(),
                               composition = "matrix"))
 
 yIris <- map(fullData, ~ bake(object = iris_recipe,
-                              newdata = .x,
+                              new_data = .x,
                               all_outcomes(),
                               composition = "matrix"))
 
