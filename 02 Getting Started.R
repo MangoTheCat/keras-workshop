@@ -166,6 +166,10 @@ plot(history)
 
 # Exercise - Breast Cancer Model --------------
 
+# reload cleaned data
+bcX <- readRDS("data/bcX.rds")
+bcY <- readRDS("data/bcY.rds")
+
 
 bcModel <- keras_model_sequential()
 
