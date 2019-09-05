@@ -5,6 +5,10 @@
 
 library(keras)
 
+is_keras_available()
+
+# if not you may need to run:
+# install_keras()
 
 # Train Test Split --------------------------------------------------------
 
