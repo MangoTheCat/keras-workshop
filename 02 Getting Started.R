@@ -21,6 +21,7 @@ fullData <- list(train = analysis(data_split),
 # Pre-processing ----------------------------------------------------------
 
 library(recipes)
+library(purrr)
 
 # Recipes
 

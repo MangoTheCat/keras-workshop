@@ -2,7 +2,7 @@
 library(tidyverse)
 library(keras)
 
-walking <- readRDS("USB/Data/walking.rds")
+walking <- readRDS("data/walking.rds")
 names(walking)
 
 dim(walking$x)
