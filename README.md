@@ -10,7 +10,7 @@ An environment with this repo checked out is available at: https://rstudio.cloud
 
 You will need to setup and account on RStudio Cloud. Afterwards you should be able to deploy the project (this can take a minute or two). Then create a copy in your own space:
 
-![save permanent copy](docs/save-perm.png)
+![save permanent copy](material/save-perm.png)
 
 Test it's working with:
 
